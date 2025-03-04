@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Literacy Quiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f2f2f2;
+            color: #333;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #444;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .question h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        label {
+            display: block;
+            margin: 8px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #333;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Subukan ang inyong kaalaman!</h1>
+    <p>Kumusta! Narito ang isang maikling pagsusulit para masubukan ang iyong kaalaman tungkol sa Artificial Intelligence (AI). Subukan mong sagutin ang mga sumusunod na tanong:</p>
+    <div class="quiz-container">
+        <form id="quiz-form">
+            <div class="question">
+                <h3>1. Ano ang pangunahing layunin ng Artificial Intelligence (AI)?</h3>
+                <label><input type="radio" name="q1" value="a"> Maglinis ng bahay nang awtomatiko</label>
+                <label><input type="radio" name="q1" value="b"> Gayahin ang kakayahan ng tao na mag-isip at magdesisyon</label>
+                <label><input type="radio" name="q1" value="c"> Magluto ng pagkain nang walang tulong ng tao</label>
+                <label><input type="radio" name="q1" value="d"> Magbigay ng libreng internet sa lahat</label>
+            </div>
+
+            <div class="question">
+                <h3>2. Paano natututo ang AI upang makapagbigay ng tamang sagot o aksyon? </h3>
+                <label><input type="radio" name="q2" value="a"> Sa pamamagitan ng panghuhula</label>
+                <label><input type="radio" name="q2" value="b"> Sa pamamagitan ng pagsasanay gamit ang maraming datos</label>
+                <label><input type="radio" name="q2" value="c"> Sa pamamagitan ng panaginip</label>
+                <label><input type="radio" name="q2" value="d"> Sa pamamagitan ng magic</label>
+            </div>
+
+            <div class="question">
+                <h3>3. Alin sa mga sumusunod ang halimbawa ng AI na maaaring ginagamit mo araw-araw?</h3>
+                <label><input type="radio" name="q3" value="a"> Electric fan</label>
+                <label><input type="radio" name="q3" value="b"> Siri o Google Assistant sa iyong smartphone</label>
+                <label><input type="radio" name="q3" value="c"> Kutsara at tinidor</label>
+                <label><input type="radio" name="q3" value="d"> Kandila</label>
+            </div>
+
+            <button type="button" onclick="calculateScore()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const answerKey = {
+            q1: "b",
+            q2: "b",
+            q3: "b",
+        };
+
+        function calculateScore() {
+            const form = document.getElementById('quiz-form');
+            let score = 0;
+            let totalQuestions = Object.keys(answerKey).length;
+
+            Object.keys(answerKey).forEach(question => {
+                const userAnswer = form[question]?.value;
+                if (userAnswer === answerKey[question]) {
+                    score++;
+                }
+            });
+
+            if (score === totalQuestions) {
+                Swal.fire({
+                    title: 'Quiz Results',
+                    text: `Congratulations! You scored ${score} out of ${totalQuestions}.`,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Quiz Results',
+                    text: `You scored ${score} out of ${totalQuestions}. Would you like to retake the quiz?`,
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonText: 'Retake',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.reset();
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
